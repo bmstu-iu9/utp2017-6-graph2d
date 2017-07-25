@@ -5,3 +5,5 @@
 * Чугунов Денис (старший) — @Praepostor-IU9
 * Масягин Михаил — @masyagin1998
 * Барлука Александр — @Nexterot
+* Фадеев Виктор — @Roninsc2
+* Зашихин Данил — @andWhatShouldISay
