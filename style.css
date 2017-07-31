@@ -1,0 +1,28 @@
+body {
+    text-align: center;
+}
+
+td {
+    width: 50%;
+    vertical-align: middle;
+}
+
+.func_params {
+    letter-spacing: -1px;
+}
+
+.number_field {
+    width: 4em;
+}
+
+#space {
+    margin-left: 0;
+}
+
+#choose_graph {
+    margin-top: 5%;
+}
+
+#build_graph {
+    display: none;
+}
