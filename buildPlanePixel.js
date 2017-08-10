@@ -19,19 +19,67 @@ function buildPlane() {
 		return eval(func);
 	};
 	
+	// Координаты в Canvas
+	const maxX = space.width;
+	const maxY = space.height;
+	const R0 = maxX / maxY;
+	const w = Math.abs(bx - ax);
+	const h = Math.abs(by - ay);
+	let kx, kx0, ky, ky0;
+	if ((w / h) < R0) {
+		kx = maxX / (h * R0);
+		kx0 = -kx * (ax + bx - h * R0) / 2;
+		ky = - maxY / h;
+		ky0 = -ky * by;
+	} else {
+		kx = maxX / w;
+		kx0 = -kx * ax;
+		ky = -maxY * R0 / w;
+		ky0 = -ky * (ay + by + w / R0) / 2;
+	};
+	
 	//Функция получающая координату X функции и возвращающая координату X в Canvas
 	const GraphX = (x) => {
-		/*Требуется написать*/
+		return Math.round(x * kx + kx0 + 0,5);
 	};
 	//Функция получающая координату Y функции и возвращающая координату Y в Canvas
 	const GraphY = (y) => {
-		/*Требуется написать*/
+		return Math.round(y * ky + ky0 + 0,5);
 	};
 	
-	/*Кусок кода отвечающий за построение координатных осей*/
-	//Функция получающая на вход значение уровня и возвращающая его цвет в формате 'rgb(r, g, b)'
+	// Построение координатных осей
+	for (let a = ax; a < (bx + 1); a += 1) {
+		context.moveTo(GraphX(a), GraphY(ay));
+		context.lineTo(GraphX(a), GraphY(by));
+	}
+	for (let a = ay; a < (by + 1); a += 1) {
+		context.moveTo(GraphX(ax), GraphY(a));
+		context.lineTo(GraphX(bx), GraphY(a));
+	}
+	context.strokeStyle = "#eee";
+	context.stroke();
+	
+	context.beginPath();
+	context.moveTo(GraphX(0), GraphY(0));
+	context.lineTo(GraphX(bx), GraphY(0));
+	context.moveTo(GraphX(0), GraphY(0));
+	context.lineTo(GraphX(0), GraphY(by));
+	context.strokeStyle = "#000";
+	context.stroke();
+	
+	// Цвета в RGB
 	const RGB = (z) => {
-		/*Требуется написать*/
+		let r, g, b;
+		if (z < (zmax / 2)) {
+			r = 0;
+			g = Math.round((255 * 2 * z) / zmax);
+			b = Math.round(255 - (255 * 2 * z) / zmax);
+		} else {
+			r = Math.round((255 * 2 * z) / zmax - 255);
+			g = Math.round(255 * 2 - (255 * 2 * z) / zmax);
+			b = 0;
+		};
+		return ('rgb(' + r + ', ' + g + ', ' + b + ')');
 	};
 	
 	//Вспомогательная функция
