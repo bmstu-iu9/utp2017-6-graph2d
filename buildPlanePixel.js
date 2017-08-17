@@ -40,11 +40,11 @@ function buildPlane() {
 	
 	//Функция получающая координату X функции и возвращающая координату X в Canvas
 	const GraphX = (x) => {
-		return Math.round(x * kx + kx0 + 0,5);
+		return Math.round(x * kx + kx0 + 0.5);
 	};
 	//Функция получающая координату Y функции и возвращающая координату Y в Canvas
 	const GraphY = (y) => {
-		return Math.round(y * ky + ky0 + 0,5);
+		return Math.round(y * ky + ky0 + 0.5);
 	};
 	
 	// Построение координатных осей
