@@ -131,4 +131,15 @@ function buildPlane() {
 			};
 		};
 	};
+	
+	//Прорисовка градиента
+	for (i = 0.5; i < 100; i += 2) {
+		context.fillStyle = RGB(i*zmax/100+az);
+		context.fillRect(maxX-20, maxY-i-10, 20, 1);
+	};
+	context.fillStyle = "#000";
+	context.font = "bold 10px sans-serif";
+	context.textBaseline = "middle";
+	context.fillText("min", maxX-20, maxY-4);
+	context.fillText("max", maxX-20, maxY-114);
 };
