@@ -101,14 +101,14 @@ function buildPlane() {
 	//Основные алгоритмы потроения графика
 	//Идет по Y
 	for (y = ay; y <= by; y += hy) {
-		yg = GraphY(y, ky, ky0);
+		yg = GraphY(y);
 		x = ax;
 		k0 = Interval(F(x, y));
 		for (x = ax+hx; x <= bx; x += hx) {
 			k = Interval(F(x, y));
 			if (k != k0) {
 				Color = Level(k0, k);
-				xg = GraphX(x - hx/2, kx, kx0);
+				xg = GraphX(x - hx/2);
 				context.fillStyle = RGB(Color*st+az);
 				context.fillRect(xg, yg, 1, 1);
 				k0 = k;
