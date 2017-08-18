@@ -187,30 +187,42 @@ function buildPlane() {
 	/*Алгоритм строит линии уровня по блокам, это не гарантирует 100% результата.
 	Чем больше число блоков, тем выше точность построения, но тем ниже скорость.*/
 	//Число отвечающее за количество блоков. N^2 -- количество блоков.
-	const N = 10;
-	let iz, ix, iy, px1, py1, px2, py2, mx, Mx, my, My;
-	for (iz = az; iz <= bz; iz += st) {
+	//qt - количество поисковых точек.
+	const N = 1;
+	const qt = 1;
+	let i, ix, iax, ibx, iy, iay, iby, iz, x, y, count;
+	for (i = 0; i < qt; i++) {
 		for (ix = 0; ix < N; ix++) {
 			for (iy = 0; iy < N; iy++) {
-				mx = (ix == 0)? ax+(ix)*(xmax/N) : ax+(ix-0.1)*(xmax/N);
-				Mx = (ix == N-1)? ax+(ix+1)*(xmax/N) : ax+(ix+1.1)*(xmax/N);
-				my = (iy == 0)? ay+(iy)*(ymax/N) : ay+(iy-0.1)*(ymax/N);
-				My = (iy == N-1)? ay+(iy+1)*(ymax/N) : iy+(iy+1.1)*(ymax/N);
-				
-				px1 = ax+(ix+0.25)*(xmax/N);
-				py1 = ay+(iy+0.5)*(ymax/N);
-				if (GradX(px1, py1) < Eps && GradY(px1, py1) < Eps) {
-					px1 -= 0.1*(xmax/N);
-				};
-				PaintLineLevel(px1, py1, iz, RGB(iz-az), mx, Mx, my, My);
-				
-				px2 = ax+(ix+0.75)*(xmax/N);
-				py2 = ay+(iy+0.5)*(ymax/N);
-				if (GradX(px1, py1) < Eps && GradY(px1, py1) < Eps) {
-					px1 += 0.1*(xmax/N);
-				};
-				PaintLineLevel(px2, py2, iz, RGB(iz-az), mx, Mx, my, My);
+				iax = (ix == 0) ? ax+ix*xmax/N : ax+(ix-0.1)*xmax/N;
+				ibx = (ix == N-1) ? ax+(ix+1)*xmax/N : ax+(ix+1.1)*xmax/N;
+				iay = (iy == 0) ? ay+iy*ymax/N : ay+(iy-0.1)*ymax/N;
+				iby = (iy == N-1) ? ay+(iy+1)*ymax/N : ay+(iy+1.1)*ymax/N;
+				x = Math.random()*(ibx-iax)+iax;
+				y = Math.random()*(iby-iay)+iay;
+				for (iz = az; iz <= bz; iz += st) {
+					count = 0;
+					while (Math.abs(GradX(x, y)) < Eps && Math.abs(GradY(x, y)) < Eps && count < 3) {
+						x = Math.random()*(ibx-iax)+iax;
+						y = Math.random()*(iby-iay)+iay;
+						count++;
+					};
+					if (count == 3) {
+						continue;
+					};
+					PaintLineLevel(x, y, iz, RGB(iz-az), iax, ibx, iay, iby);
+				}
 			}
 		}
+	}
+	//Прорисовка градиента
+	for (i = 0.5; i < 100; i += 2) {
+		context.fillStyle = RGB(i*zmax/100+az);
+		context.fillRect(maxX-20, maxY-i-10, 20, 1);
 	};
+	context.fillStyle = "#000";
+	context.font = "bold 10px sans-serif";
+	context.textBaseline = "middle";
+	context.fillText("min", maxX-20, maxY-4);
+	context.fillText("max", maxX-20, maxY-114);
 };
