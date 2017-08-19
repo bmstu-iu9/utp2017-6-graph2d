@@ -9,7 +9,17 @@ function buildPlane() {
 	//Границы построение функции по X, Y, Z (Z = F(X, Y)) соответственно
 	const ax = Number(val_ax.value), bx = Number(val_bx.value), ay = Number(val_ay.value), by = Number(val_by.value), az = Number(val_az.value), bz = Number(val_bz.value);
 	//Шаг построения по X, Y, Z соответственновенно
+	//При значении равным 0 шаг будет выбран автоматически
 	const hx = Number(val_hx.value), hy = Number(val_hy.value), st = Number(val_st.value);
+	if (hx == 0) {
+		hx = Math.abs(bx-ax)/500;
+	};
+	if (hy == 0) {
+		hy = Math.abs(by-ay)/500;
+	};
+	if (st == 0) {
+		st = Math.abs(bz-az)/15;
+	};
 	//Длина оси Z
 	const zmax = Math.abs(bz-az);
 	//Строка в которой записана функция от x, y
