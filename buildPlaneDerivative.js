@@ -26,13 +26,13 @@ function buildPlane() {
 	//Функция частной производной по X
 
 	const GradX = (x, y) => {
-		return ((-f(x + 2 * hX, y) + 8 * f(x + hX, y) - 8 * f(x - hX, y) + f(x - 2 * hX, y)) / (12 * hX));
+		return ((-F(x + 2 * hX, y) + 8 * F(x + hX, y) - 8 * F(x - hX, y) + F(x - 2 * hX, y)) / (12 * hX));
 	};
 
 	//Функция частной производной по Y
 
 	const GradY = (x, y) => {
-		return ((-f(x, y + 2 * hY) + 8 * f(x, y + hY) - 8 * f(x, y - hY) + f(x, y - 2 * hY)) / (12 * hY));
+		return ((-F(x, y + 2 * hY) + 8 * F(x, y + hY) - 8 * F(x, y - hY) + F(x, y - 2 * hY)) / (12 * hY));
 	};
 	
 	// Координаты в Canvas
