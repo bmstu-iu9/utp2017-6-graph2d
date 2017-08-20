@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<script src="buildPlane3.0.js"></script>
+        <link rel="stylesheet" href="style.css" type="text/css">
+		<title>Графопостроитель-2000</title>
+	</head>
+	<body>
+        <!-- Меню выбора -->
+        <div id="choose_graph"> 
+            Выберите тип графика:
+            <br><br>
+            <button onclick="showGraphFx();">f(x)</button>
+            <br><br>
+            <button onclick="showGraphFxy();">f(x,y)</button>
+        </div>
+        
+        <!-- Построение графика -->
+        <table id="build_graph"> 
+            <tr>
+                <td>
+                    <!-- Область значений Х, шаг по X -->
+                    <p class="func_params"> 
+                        <b>X &isin; [
+                        <input id="val_ax" type="number" class="number_field" autocomplete="off" value="-20">
+                        , 
+                        <input id="val_bx" type="number" class="number_field" autocomplete="off" value="20">
+                        ] Шаг
+                        <input id="val_hx" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1"></b>
+                    </p>
+                    <!-- Область значений Y, шаг по Y -->
+                    <p class="func_params"> 
+                        <b>Y &isin; [
+                        <input id="val_ay" type="number" class="number_field" autocomplete="off" value="-20">
+                        , 
+                        <input id="val_by" type="number" class="number_field" autocomplete="off" value="20">
+                        ] Шаг
+                        <input id="val_hy" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1"></b>
+                    </p>
+                    <!-- Область значений F(x,y), шаг по F(x,y) -->
+                    <p class="func_params"> 
+                        <b>F &isin; [
+                        <input id="val_az" type="number" class="number_field" autocomplete="off" value="0">
+                        , 
+                        <input id="val_bz" type="number" class="number_field" autocomplete="off" value="20">
+                        ]</b>
+                        <b>Шаг
+                        <input id="val_st" type="number" class="number_field" autocomplete="off" value="5" step="0.1"></b>
+                    </p> 
+                    <!-- Ввод функции -->
+                    <p class="func_params">
+                        <b>F(x,y) = 
+                        <input id="val_func" type="text" value="x**2+y**2"></b>
+                        <input type="button" value="Построить" onclick="buildPlane();">
+                    </p>
+                    <br>
+                    <!-- Кнопка вернуться в меню выбора -->
+                    <p> 
+                        <button id="return_to_choice" onclick="showGraphChoice();">Вернуться</button>
+                    </p>
+                </td>
+                <td> 
+                    <!-- Холст отрисовки графика функции -->
+                    <canvas id="space" width="600" height="600"></canvas> 
+                </td>
+            </tr>
+        </table>
+        
+        <script>
+            // скрыть меню выбора 
+            // и перейти к построению графика F(x)
+            function showGraphFx() {
+                // todo построение графика одной переменной
+                alert('todo');
+            }
+                        
+            // скрыть меню выбора 
+            // и перейти к построению графика F(x)
+            function showGraphFxy() {
+                choose_graph.style.display = 'none';
+                build_graph.style.display = 'block';
+                space.width = document.body.clientHeight - 10;
+                space.height = document.body.clientHeight - 10;
+            }
+                        
+            // вернуться к меню выбора
+            function showGraphChoice() {
+                build_graph.style.display = 'none';
+                choose_graph.style.display = 'block';
+                return_to_choice.display = 'none';
+            }
+        </script>   
+	</body>
+</html>
