@@ -8,8 +8,18 @@ function buildPlane() {
 	
 	//Границы построение функции по X, Y, Z (Z = F(X, Y)) соответственно
 	const ax = Number(val_ax.value), bx = Number(val_bx.value), ay = Number(val_ay.value), by = Number(val_by.value), az = Number(val_az.value), bz = Number(val_bz.value);
-	//Шаг построения по Z, эпсилон для нужной точности и длина шага
-	const st = Number(val_st.value), Eps = Number(val_Eps.value), L = Number(val_L.value);
+	//Эпсилон для нужной точности и длина шага
+	const Eps = Number(val_Eps.value), L = Number(val_L.value);
+	//Шаг построения по Z
+	let st = Number(val_st.value);
+	//Выбор автоматического значения
+	if (st == 0) {
+		st = Math.abs(bz-az)/15;
+		//Пользователь может выбрать только одну изолинию.
+		if (st == 0) {
+			st = 1;
+		};
+	};
 	//Длина осей X, Y, Z соответсвенно
 	const xmax = Math.abs(bx-ax), ymax = Math.abs(by-ay), zmax = Math.abs(bz-az);
 	//Строка в которой записана функция от x, y
