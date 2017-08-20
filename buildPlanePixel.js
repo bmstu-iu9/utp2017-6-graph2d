@@ -10,7 +10,7 @@ function buildPlane() {
 	const ax = Number(val_ax.value), bx = Number(val_bx.value), ay = Number(val_ay.value), by = Number(val_by.value), az = Number(val_az.value), bz = Number(val_bz.value);
 	//Шаг построения по X, Y, Z соответственновенно
 	//При значении равным 0 шаг будет выбран автоматически
-	const hx = Number(val_hx.value), hy = Number(val_hy.value), st = Number(val_st.value);
+	let hx = Number(val_hx.value), hy = Number(val_hy.value), st = Number(val_st.value);
 	if (hx == 0) {
 		hx = Math.abs(bx-ax)/500;
 	};
