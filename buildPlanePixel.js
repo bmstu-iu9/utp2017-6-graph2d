@@ -143,6 +143,7 @@ function buildPlane() {
 	};
 	
 	//Прорисовка градиента
+	let i;
 	for (i = 0.5; i < 100; i += 2) {
 		context.fillStyle = RGB(i*zmax/100+az);
 		context.fillRect(maxX-20, maxY-i-10, 20, 1);
