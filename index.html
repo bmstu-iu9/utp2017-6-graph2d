@@ -2,21 +2,31 @@
 <html lang="ru">
 	<head>
 		<meta charset="utf-8">
+		<script src="buildPlaneDerivative.js"></script>
 		<script src="buildPlanePixel.js"></script>
         <link rel="stylesheet" href="style.css" type="text/css">
 		<title>Графопостроитель-2000</title>
 	</head>
 	<body>
-        <!-- Меню выбора -->
-        <div id="choose_graph"> 
+        <!-- Меню выбора количества переменных -->
+        <div id="choose_num_vars"> 
             Выберите тип графика:
             <br><br>
             <button onclick="showGraphFx();">f(x)</button>
             <br><br>
-            <button onclick="showGraphFxy();">f(x,y)</button>
+            <button onclick="showMeansChoice();">f(x,y)</button>
         </div>
         
-        <!-- Построение графика -->
+        <!-- Меню выбора способа построения -->
+        <div id="choose_means">
+            Выберите способ построения графика:
+            <br><br>
+            <button onclick="showGraphFxyPixel();">По точкам</button>
+            <br><br>
+            <button onclick="showGraphFxyDer();">По производным</button>
+        </div>
+        
+        <!-- Построение графика 2-х переменных -->
         <table id="build_graph"> 
             <tr>
                 <td>
@@ -26,8 +36,12 @@
                         <input id="val_ax" type="number" class="number_field" autocomplete="off" value="-20">
                         , 
                         <input id="val_bx" type="number" class="number_field" autocomplete="off" value="20">
-                        ] Шаг
-                        <input id="val_hx" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1"></b>
+                        ] 
+                        <!-- Шаг по х при построении по точках -->
+                        <span id="step_x">
+                            Шаг
+                            <input id="val_hx" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1"></b>
+                        </span>
                     </p>
                     <!-- Область значений Y, шаг по Y -->
                     <p class="func_params"> 
@@ -35,8 +49,22 @@
                         <input id="val_ay" type="number" class="number_field" autocomplete="off" value="-20">
                         , 
                         <input id="val_by" type="number" class="number_field" autocomplete="off" value="20">
-                        ] Шаг
-                        <input id="val_hy" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1"></b>
+                        ] 
+                        <!-- Шаг по y при построении по точках -->
+                        <span id="step_y">
+                            Шаг
+                            <input id="val_hy" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1"></b>
+                        </span>
+                    </p>
+                    
+                    <!-- Eps и L при построении по производным -->
+                    <p id="eps_l">
+                        <b>
+                        Eps =
+                            <input id="val_L" type="number" class="number_field" autocomplete="off" value="0.005" step="0.001">
+                        L = 
+                            <input id="val_Eps" type="number" class="number_field" autocomplete="off" value="0.05" step="0.01">
+                        </b>
                     </p>
                     <!-- Область значений F(x,y), шаг по F(x,y) -->
                     <p class="func_params"> 
@@ -46,18 +74,28 @@
                         <input id="val_bz" type="number" class="number_field" autocomplete="off" value="20">
                         ]</b>
                         <b>Шаг
-                        <input id="val_st" type="number" class="number_field" autocomplete="off" value="5" step="0.1"></b>
+                        <input id="val_st" type="number" class="number_field" autocomplete="off" value="5.0" step="0.1"></b>
                     </p> 
                     <!-- Ввод функции -->
                     <p class="func_params">
                         <b>F(x,y) = 
                         <input id="val_func" type="text" value="x**2+y**2"></b>
-                        <input type="button" value="Построить" onclick="buildPlane();">
+                        <input id="build_pixel" type="button" value="Построить" onclick="buildPlanePixel();">
+						<input id="build_derivative" type="button" value="Построить" onclick="buildPlaneDerivative();">
                     </p>
                     <br>
-                    <!-- Кнопка вернуться в меню выбора -->
+					<p>
+						<i>Примечания:
+						<br> 
+						при выбранном шаге = 0, шаг выбирается автоматически;
+						<br>
+						Eps - погрешность, L - длина шага (по касательной);
+						</i> 
+					</p>
+					<br>					
+                    <!-- Кнопка вернуться -->
                     <p> 
-                        <button id="return_to_choice" onclick="showGraphChoice();">Вернуться</button>
+                        <button id="return_to_choice" onclick="showGraphChoice();">Вернуться на главную</button>
                     </p>
                 </td>
                 <td> 
@@ -68,18 +106,39 @@
         </table>
         
         <script>
-            // скрыть меню выбора 
-            // и перейти к построению графика F(x)
+            
+            // перейти к построению графика F(x)
             function showGraphFx() {
                 // todo построение графика одной переменной
                 alert('todo');
             }
+            
+            // показать меню выбора способа построения 2-х переменных
+            function showMeansChoice() {
+                choose_num_vars.style.display = 'none';
+                choose_means.style.display = 'block';
+            }
                         
-            // скрыть меню выбора 
-            // и перейти к построению графика F(x)
-            function showGraphFxy() {
-                choose_graph.style.display = 'none';
+            function showGraphFxyPixel() {
+                choose_means.style.display = 'none';
                 build_graph.style.display = 'block';
+                eps_l.style.display = 'none';
+                step_x.style.display = 'inline';
+                step_y.style.display = 'inline';
+				build_derivative.style.display = 'none';
+				build_pixel.style.display = 'inline';
+                space.width = document.body.clientHeight - 10;
+                space.height = document.body.clientHeight - 10;
+            }
+            
+            function showGraphFxyDer() {
+                choose_means.style.display = 'none';
+                build_graph.style.display = 'block';
+                eps_l.style.display = 'block';
+                step_x.style.display = 'none';
+                step_y.style.display = 'none';
+				build_derivative.style.display = 'inline';
+				build_pixel.style.display = 'none';
                 space.width = document.body.clientHeight - 10;
                 space.height = document.body.clientHeight - 10;
             }
@@ -87,9 +146,10 @@
             // вернуться к меню выбора
             function showGraphChoice() {
                 build_graph.style.display = 'none';
-                choose_graph.style.display = 'block';
+                choose_num_vars.style.display = 'block';
                 return_to_choice.display = 'none';
             }
+
         </script>   
 	</body>
 </html>

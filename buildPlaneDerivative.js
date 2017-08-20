@@ -1,7 +1,7 @@
 /*Алгоритм построения графика функций от двух переменных.
 Алгоритм строит изолинии (линии уровня) графика по заданному Z (значению уровня).*/
 'use strict'
-function buildPlane() {
+function buildPlaneDerivative() {
 	//Обновление canvas и создание context
 	space.width = space.width;
 	const context = space.getContext('2d');
