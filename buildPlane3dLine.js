@@ -1,7 +1,7 @@
 /*Алгоритм построения графика функций от двух переменных.
 Алгоритм строит график в пространстве*/
 'use strict'
-function buildPlane() {
+function buildPlane3dLine() {
 	//Обновление canvas и создание context
 	space.width = space.width;
 	const context = space.getContext('2d');
