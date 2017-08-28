@@ -31,8 +31,8 @@ function buildPlanePixel() {
 	};
 	
 	// Координаты в Canvas
-	const maxX = space.width;
-	const maxY = space.height;
+	const maxX = space.width - 30;
+	const maxY = space.height - 30;
 	const R0 = maxX / maxY;
 	const w = Math.abs(bx - ax);
 	const h = Math.abs(by - ay);
@@ -48,7 +48,8 @@ function buildPlanePixel() {
 		ky = -maxY * R0 / w;
 		ky0 = -ky * (ay + by + w / R0) / 2;
 	};
-	
+	kx0 += 20;
+	ky0 += 10;
 	//Функция получающая координату X функции и возвращающая координату X в Canvas
 	const GraphX = (x) => {
 		return Math.round(x * kx + kx0 + 0.5);
@@ -59,24 +60,42 @@ function buildPlanePixel() {
 	};
 	
 	// Построение координатных осей
-	for (let a = ax; a < (bx + 1); a += 1) {
-		context.moveTo(GraphX(a), GraphY(ay));
-		context.lineTo(GraphX(a), GraphY(by));
-	}
-	for (let a = ay; a < (by + 1); a += 1) {
-		context.moveTo(GraphX(ax), GraphY(a));
-		context.lineTo(GraphX(bx), GraphY(a));
-	}
-	context.strokeStyle = "#eee";
+	context.lineWidth = 1.5;
+	context.moveTo(GraphX(ax), GraphY(ay));
+	context.lineTo(GraphX(bx), GraphY(ay));
+	context.moveTo(GraphX(ax), GraphY(ay));
+	context.lineTo(GraphX(ax), GraphY(by));
+	context.strokeStyle = "#000";
+	context.stroke();
+	
+	
+	context.beginPath();
+	context.lineWidth = 0.5;
+	context.textAlign = 'left';
+	context.setLineDash([3]);
+	context.fillStyle = "#000";
+	const Q = 5;
+	let xc, yc;
+	for (let a = 0; a <= Q; a++) {
+		yc = ay+a*(by-ay)/Q;
+		context.fillText(Math.round(yc).toString(10), 0, GraphY(yc) + 2);
+		context.moveTo(GraphX(ax), GraphY(yc));
+		context.lineTo(GraphX(bx), GraphY(yc));
+	};
+	context.strokeStyle = "#5f5f5f";
 	context.stroke();
 	
 	context.beginPath();
-	context.moveTo(GraphX(0), GraphY(0));
-	context.lineTo(GraphX(bx), GraphY(0));
-	context.moveTo(GraphX(0), GraphY(0));
-	context.lineTo(GraphX(0), GraphY(by));
-	context.strokeStyle = "#000";
+	context.textAlign = 'center';
+	for (let a = 0; a <= Q; a++) {
+		xc = ax + a * (bx - ax) / Q
+		context.fillText(Math.round(xc).toString(10), GraphX(xc), maxY + 25);
+		context.moveTo(GraphX(xc), GraphY(ay));
+		context.lineTo(GraphX(xc), GraphY(by));
+	};
+	context.strokeStyle = "#5f5f5f";
 	context.stroke();
+	context.setLineDash([0]);
 	
 	// Цвета в RGB
 	const RGB = (z) => {
@@ -110,6 +129,7 @@ function buildPlanePixel() {
 	//Вспомогательные переменные
 	let x, xg, y, yg, Color, k0, k;
 	//Основные алгоритмы потроения графика
+	context.beginPath();
 	//Идет по Y
 	for (y = ay; y <= by; y += hy) {
 		yg = GraphY(y);
@@ -147,11 +167,11 @@ function buildPlanePixel() {
 	let i;
 	for (i = 0.5; i < 100; i += 2) {
 		context.fillStyle = RGB(i*zmax/100+az);
-		context.fillRect(maxX-20, maxY-i-10, 20, 1);
+		context.fillRect(maxX, maxY - i, 20, 1);
 	};
 	context.fillStyle = "#000";
 	context.font = "bold 10px sans-serif";
 	context.textBaseline = "middle";
-	context.fillText("min", maxX-20, maxY-4);
-	context.fillText("max", maxX-20, maxY-114);
+	context.fillText("min", maxX+10, maxY+6);
+	context.fillText("max", maxX+10, maxY-104);
 };
