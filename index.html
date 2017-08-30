@@ -5,6 +5,7 @@
 		<script src="buildPlaneDerivative.js"></script>
 		<script src="buildPlanePixel.js"></script>
 		<script src="buildPlane3dLine.js"></script>
+		<script src="build_Fx.js"></script>
         <link rel="stylesheet" href="style.css" type="text/css">
 		<title>Графопостроитель-2000</title>
 	</head>
@@ -114,6 +115,61 @@
                 </td>
             </tr>
         </table>
+
+		<!-- Построение графика 1-ой переменной -->
+        <table id="build_graph_fx"> 
+            <tr>
+                <td>
+                    <!-- Область значений Х, шаг по X -->
+                    <p class="func_params"> 
+                        <b>X &isin; [
+                        <input id="val_start" type="number" class="number_field" autocomplete="off" value="-20">
+                        , 
+                        <input id="val_stop" type="number" class="number_field" autocomplete="off" value="20">
+                        ]
+                    </p>
+             		
+                    <!-- Ввод функции -->
+                    <p class="func_params">
+                        <b>F(x) = 
+                        <input id="val_fx" type="text" value="x"></b>
+                        <input id="build_fx" type="button" value="Построить" onclick="build_Fx();">
+                    </p>
+                    <br>
+					<p id="lexer_annotation">
+						<i>Описание лексики:
+						<br> 
+						Фукнция : funciton(val) или  funciton(val,val) или funciton()
+						<br>
+						Число : [число]
+						<br>
+						Переменная : x
+						<br>
+						val : Число или Функция или Переменная
+						<br>
+						Пробелов быть не должно	
+						<br>
+						Доступные функции: sin(val), cos(val), tg(val), ctg(val),
+						<br>
+						arcsin(val), arccos(val), arctg(val), arcctg(val),
+						<br>
+						abs(val), pow(val,val), plus(val,val), minus(val,val),
+						<br>
+						mult(val,val), div(val,val), log(val,val), pi(), e()
+						</i> 
+					</p>
+					<br>					
+                    <!-- Кнопка вернуться -->
+                    <p> 
+                        <button id="return_to_choice" onclick="showGraphChoice();">Вернуться на главную</button>
+                    </p>
+                </td>
+                <td> 
+                    <!-- Холст отрисовки графика функции -->
+                    <canvas id="space_fx" width="600" height="600"></canvas> 
+                </td>
+            </tr>
+        </table>
         
         <script>
             
@@ -121,8 +177,11 @@
 			
             // перейти к построению графика F(x)
             function showGraphFx() {
-                // todo построение графика одной переменной
-                alert('todo');
+                choose_num_vars.style.display = 'none';
+                build_graph_fx.style.display = 'block';
+				build_fx.style.display = 'inline';
+				lexer_annotation.style.display = 'block';
+				resizeCanvas();
             }
             
             // показать меню выбора способа построения 2-х переменных
@@ -185,7 +244,9 @@
             // вернуться к меню выбора
             function showGraphChoice() {
 				space.getContext('2d').clearRect(0, 0, space.width, space.height);
+				space_fx.getContext('2d').clearRect(0, 0, space_fx.width, space_fx.height);
                 build_graph.style.display = 'none';
+				build_graph_fx.style.display = 'none';
                 choose_num_vars.style.display = 'block';
                 return_to_choice.display = 'none';
             }
@@ -194,6 +255,8 @@
 				if (firstRun) {
 					space.width = document.body.clientHeight - 30;
 					space.height = document.body.clientHeight - 30;
+					space_fx.width = document.body.clientHeight - 30;
+					space_fx.height = document.body.clientHeight - 30;
 					firstRun = false;
 				}
 			}
