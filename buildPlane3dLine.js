@@ -126,6 +126,15 @@ function buildPlane3dLine() {
 		helparr = GraphToCanvas(ax, y, az);
 		context.lineTo(helparr[0], helparr[1]+20);
 	};
+	//Название осей
+	context.font = "20px Arial";
+	helparr = GraphToCanvas(ax, ay, (bz+az)/2);
+	context.fillText('z', helparr[0]-20, helparr[1]+5);
+	helparr = GraphToCanvas((bx+ax)/2, ay, az);
+	context.fillText('x', helparr[0]-20, helparr[1]+45);
+	helparr = GraphToCanvas(bx, (by+ay)/2, az);
+	context.fillText('y', helparr[0]+20, helparr[1]+40);
+	
 	context.strokeStyle = "#5f5f5f";
 	context.stroke();
 	
