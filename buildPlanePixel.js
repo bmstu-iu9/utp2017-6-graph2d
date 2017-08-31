@@ -96,6 +96,10 @@ function buildPlanePixel() {
 	context.strokeStyle = "#5f5f5f";
 	context.stroke();
 	context.setLineDash([0]);
+	//Название осей координат
+	context.font = "20px Arial";
+	context.fillText('y', GraphX(ax)-13, GraphY((ay+by)/2));
+	context.fillText('x', GraphX((ax+bx)/2), GraphY(ay)+17);
 	
 	// Цвета в RGB
 	const RGB = (z) => {
