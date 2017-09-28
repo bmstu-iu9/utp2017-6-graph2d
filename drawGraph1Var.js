@@ -1,5 +1,6 @@
 'use strict'
 function buildLine2dDerivative() {
+	try {
 	//Область определения функции и длина оси OX
 	const ax = Number(val_ax.value), bx = Number(val_bx.value), xmax = Math.abs(bx-ax);
 	//Строка в которой записана функция от x
@@ -146,10 +147,10 @@ function buildLine2dDerivative() {
 	//Блок прорисовки осей координат
 	context.beginPath();
 	context.lineWidth = 2;
-	context.moveTo(lx, space.height - dy);
+	context.moveTo(lx, space.height-dy);
 	context.lineTo(lx, uy);
-	context.moveTo(lx, space.height - dy);
-	context.lineTo(space.width-rx, space.height - dy);
+	context.moveTo(lx, space.height-dy);
+	context.lineTo(space.width-rx, space.height-dy);
 	context.strokeStyle = '#000';
 	context.stroke();
 	
@@ -160,22 +161,22 @@ function buildLine2dDerivative() {
 	const Q = 9;
 	let xc, yc;
 	for (let i = 0; i <= Q; i++) {
-		xc = GraphX(ax + i * xmax / Q);
-		yc = GraphY(ay + i * ymax / Q);
+		xc = GraphX(ax+i*xmax/Q);
+		yc = GraphY(ay+i*ymax/Q);
 		context.textAlign = 'right';
-		context.fillText((ay + i * ymax / Q).toFixed(1), GraphX(ax) - 3, yc + 2.5, lx - 5);
+		context.fillText((ay+i*ymax/Q).toFixed(1), GraphX(ax)-3, yc+2.5, lx-5);
 		context.moveTo(GraphX(ax), yc);
 		context.lineTo(GraphX(bx), yc);
 		
 		context.textAlign = 'center';
-		context.fillText((ax + i * xmax / Q).toFixed(1), xc, GraphY(ay) + 13);
+		context.fillText((ax+i*xmax/Q).toFixed(1), xc, GraphY(ay)+13);
 		context.moveTo(xc, GraphY(ay));
 		context.lineTo(xc, GraphY(by));
 	};
 	context.font = "20px Arial";
 	context.textAlign = 'center';
-	context.fillText('Y', GraphX(ax) - 15, GraphY(ay + ymax / 2));
-	context.fillText('X', GraphX(ax + xmax / 2), GraphY(ay) + 20);
+	context.fillText('Y', GraphX(ax)-15, GraphY(ay+ymax/2));
+	context.fillText('X', GraphX(ax+xmax/2), GraphY(ay)+20);
 	
 	context.strokeStyle = '#5f5f5f';
 	context.stroke();
@@ -199,8 +200,8 @@ function buildLine2dDerivative() {
 	//Вспомогательная функция для функции PaintLine(x).
 	const Step = (x0, R) => {
 		const k = Der(x0);
-		const D = Math.sqrt(k ** 2 + 1);
-		return x0 + R * L / D;
+		const D = Math.sqrt(k**2+1);
+		return x0+R*L/D;
 	};
 	//Алгоритм строящий одну линию графика.
 	const PaintLine = (x) => {
@@ -236,13 +237,18 @@ function buildLine2dDerivative() {
 	//Функция строящая все линии на области определения.
 	let x = ax, y = F(x);
 	while (true) {
-			while ((!isFinite(y)) && (x < bx)) {
-				x += xmax / D;
+			while (!isFinite(y) && x < bx) {
+				x += xmax/D;
 				y = F(x);
 			};
 			if (x >= bx) {
 				break;
 			};
-			x = PaintLine(x) + xmax / D;
+			x = PaintLine(x) + xmax/D;
 		};
+		
+	} 
+	catch (err) {
+		alert("Ошибка ввода!");
+	}
 };
