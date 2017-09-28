@@ -1,10 +1,14 @@
 /*Алгоритм построения графика функций от двух переменных.
 Алгоритм строит график в пространстве*/
 'use strict'
-function drawGraph2Var() {
+function buildPlane3dLine() {
 	//Обновление canvas и создание context
+	try {
 	space.width = space.width;
 	const context = space.getContext('2d');
+	
+	context.fillStyle = '#fff';
+	context.fillRect(5,5,space.width, space.height);
 	
 	//Границы построение функции по X, Y, Z (Z = F(X, Y)) соответственно
 	const ax = Number(val_ax.value), bx = Number(val_bx.value), ay = Number(val_ay.value), by = Number(val_by.value), az = Number(val_az.value), bz = Number(val_bz.value);
@@ -248,4 +252,9 @@ function drawGraph2Var() {
 			};
 		};
 	};
+	
+	} 
+	catch (err) {
+		alert("Ошибка ввода!");
+	}
 };
