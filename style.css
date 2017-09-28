@@ -1,0 +1,40 @@
+body {
+    text-align: center;
+    background-color: #4E629A;
+    font-family: Arial;
+}
+
+table {
+    text-align: center;
+}
+
+.name {
+    color: #FFFFFF;
+    font-size: 150%;
+}
+
+.menu {
+    width: 110%;
+    background-color: #E9E9E8;
+	
+}
+
+.number_field {
+	width: 15%;
+}
+
+#step_x {
+	display: none;
+}
+
+#step_y {
+	display: none;
+}
+
+#f {
+	display: none;
+}
+
+#space {
+	width: 90%;
+}

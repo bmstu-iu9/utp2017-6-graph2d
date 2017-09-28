@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <title>Графопостроитель</title>
+    </head>
+    <body>
+	
+	<script>
+		var stateOneVar = true;
+		
+		function switchOneVar() {
+			if (stateOneVar) return;
+			label_vars.innerHTML = 'F(x) =';
+			stateOneVar = true;
+			build_derivative.onclick = buildLine2dDerivative;
+			step_x.style.display = 'none';
+			step_y.style.display = 'none';
+			f.style.display = 'none';
+			menu_auto_f.style.display = 'inline';
+			val_func.value = 'Math.sin(x)/x';
+			
+			auto_f.checked = false;
+		}
+		
+		function switchTwoVars() {
+			if (!stateOneVar) return;
+			label_vars.innerHTML = 'F(x,y) =';
+			stateOneVar = false;
+			build_derivative.onclick = buildPlane3dLine;
+			step_x.style.display = 'inline';
+			step_y.style.display = 'inline';
+			f.style.display = 'inline';
+			menu_auto_f.style.display = 'none';
+			val_func.value = 'x**2+y**2';
+			
+			val_ay.disabled = false;
+			val_by.disabled = false;
+			step_y.disabled = false;
+		}
+		
+		function switchAutoF() {
+			if (auto_f.checked) {
+				val_ay.disabled = true;
+				val_by.disabled = true;
+				step_y.disabled = true;
+			} else {
+				val_ay.disabled = false;
+				val_by.disabled = false;
+				step_y.disabled = false;
+			}
+		}
+	</script>	
+	
+        <!-- Меню пострения графика функции -->
+        <table id="graph_1_var">
+            <tr>
+                    <p class="name">
+                        Построение графиков функций онлайн без смс и регистрации!
+                    </p>
+            </tr>
+            <tr>
+                <td>
+                    <div class ="menu">
+					<br \>
+                        <!-- Отступ -->
+                        <p>
+							<!-- Радиобокс 1/2 переменных -->
+							<label><input type="radio" class="choice_radio" name="choice" value="1)" onclick="switchOneVar();" checked \> F(x) </label>
+							<label><input type="radio" class="choice_radio" name="choice" value="2)" onclick="switchTwoVars();" \> F(x,y) </label>
+                        </p>
+						
+						<p id="menu_auto_f">
+							<!-- сабж -->
+							<label><i><input type="checkbox" id="auto_f" onclick="switchAutoF();" \> Автовыбор значений Y? </i></label>
+						</p>
+                        
+						<b>
+                        <!-- Область значений Х, шаг по X -->
+                        <p class="menu_x">
+                            
+                                X &isin; [
+                                <input id="val_ax" type="number" class="number_field" autocomplete="off" value="-20" max="100">
+                                , <input id="val_bx" type="number" class="number_field" autocomplete="off" value="20">
+                                ]
+								<span id="step_x">
+								Шаг
+								<input id="val_hx" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1">
+								</span>
+                        </p>
+						
+
+                        <!-- Область значений Y, шаг по Y -->
+                        <p class="menu_y"> 
+								Y &isin; [
+                                <input id="val_ay" type="number" class="number_field" autocomplete="off" value="-20">
+                                , 
+                                <input id="val_by" type="number" class="number_field" autocomplete="off" value="20">
+                                ]
+								<span id="step_y">
+                            Шаг
+                            <input id="val_hy" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1">
+                        </span>
+                        </p>
+						
+						<!-- Область значений F(x,y) -->
+						<p id="f" class="func_params"> 
+                        <b>F &isin; [
+                        <input id="val_az" type="number" class="number_field" autocomplete="off" value="0">
+                        , 
+                        <input id="val_bz" type="number" class="number_field" autocomplete="off" value="50">
+                        ]
+						<!-- Шаг по F(x,y) -->
+						<span id="step_f">
+							Шаг
+							<input id="val_st" type="number" class="number_field" autocomplete="off" value="5.0" step="0.1"></b>
+						</span>
+						</p> 
+                        
+                        <!-- Ввод функции одной переменной -->
+                        <p class="menu_val">
+                            <label id="label_vars">
+								F(x) =
+								</label> 
+                                <input id="val_func" type="text" value="Math.sin(x)/x"></b>
+						<input id="build_derivative" type="button" value="Построить" onclick="buildLine2dDerivative();">
+                        </p>
+						</b>
+					
+                        <!-- Отступ -->
+                        <p>
+                            <br/>
+                        </p>
+                    </div>
+                </td>
+                <td> 
+                    <!-- Холст отрисовки графика функции -->
+                    <canvas id="space" width="1500" height="800"></canvas> 
+                </td>
+            </tr>
+        </table>
+        <script src="drawGraph1Var.js"></script>
+        <script src="drawGraph2Var.js"></script>
+    </body>
+</html>
