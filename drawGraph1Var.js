@@ -1,5 +1,5 @@
 'use strict'
-function drawGraph1Var() {	
+function buildLine2dDerivative() {
 	//Область определения функции и длина оси OX
 	const ax = Number(val_ax.value), bx = Number(val_bx.value), xmax = Math.abs(bx-ax);
 	//Строка в которой записана функция от x
@@ -140,4 +140,109 @@ function drawGraph1Var() {
 	const GraphY = (y) => {
 		return uy+maxY-(y-ay)*ky;
 	};
+	
+	//<><><><><><><><><><><><><><><><><><><><><><>\\
+	
+	//Блок прорисовки осей координат
+	context.beginPath();
+	context.lineWidth = 2;
+	context.moveTo(lx, space.height - dy);
+	context.lineTo(lx, uy);
+	context.moveTo(lx, space.height - dy);
+	context.lineTo(space.width-rx, space.height - dy);
+	context.strokeStyle = '#000';
+	context.stroke();
+	
+	context.beginPath();
+	context.lineWidth = 0.5;
+	context.setLineDash([3]);
+	context.fillStyle = "#000";
+	const Q = 9;
+	let xc, yc;
+	for (let i = 0; i <= Q; i++) {
+		xc = GraphX(ax + i * xmax / Q);
+		yc = GraphY(ay + i * ymax / Q);
+		context.textAlign = 'right';
+		context.fillText((ay + i * ymax / Q).toFixed(1), GraphX(ax) - 3, yc + 2.5, lx - 5);
+		context.moveTo(GraphX(ax), yc);
+		context.lineTo(GraphX(bx), yc);
+		
+		context.textAlign = 'center';
+		context.fillText((ax + i * xmax / Q).toFixed(1), xc, GraphY(ay) + 13);
+		context.moveTo(xc, GraphY(ay));
+		context.lineTo(xc, GraphY(by));
+	};
+	context.font = "20px Arial";
+	context.textAlign = 'center';
+	context.fillText('Y', GraphX(ax) - 15, GraphY(ay + ymax / 2));
+	context.fillText('X', GraphX(ax + xmax / 2), GraphY(ay) + 20);
+	
+	context.strokeStyle = '#5f5f5f';
+	context.stroke();
+	
+	context.beginPath();
+	context.setLineDash([0]);
+	context.lineWidth = 0.5;
+	
+	if (ax <= 0) {
+		context.moveTo(GraphX(0), GraphY(ay));
+		context.lineTo(GraphX(0), GraphY(by));
+	};
+	if (ay <= 0) {
+		context.moveTo(GraphX(ax), GraphY(0));
+		context.lineTo(GraphX(bx), GraphY(0));
+	};
+	context.strokeStyle = '#007BA7';
+	context.stroke();
+	
+	//Алгоритм делающий шаг длины L по направлению R вдоль касательной.
+	//Вспомогательная функция для функции PaintLine(x).
+	const Step = (x0, R) => {
+		const k = Der(x0);
+		const D = Math.sqrt(k ** 2 + 1);
+		return x0 + R * L / D;
+	};
+	//Алгоритм строящий одну линию графика.
+	const PaintLine = (x) => {
+		context.beginPath();
+		let x0, P, Q, R, y, mx;
+		P = x;
+		
+		x0 = P;
+		context.moveTo(GraphX(x0), GraphY(F(x0)));
+		R = 1;
+		while (true) {
+			x = Step(x0, R);
+			y = F(x);
+			context.lineTo(GraphX(x), GraphY(y));
+			if (!isFinite(y) || x > bx || x < ax || y > by || y < ay) {
+				if (R == -1) {
+					break;
+				} else {
+					mx = x0;
+					R = -1;
+					x0 = P;
+					context.moveTo(GraphX(x0), GraphY(F(x0)));
+					continue;
+				};
+			};
+			x0 = x;
+		};
+		
+		context.strokeStyle = '#000';
+		context.stroke();
+		return mx;
+	};
+	//Функция строящая все линии на области определения.
+	let x = ax, y = F(x);
+	while (true) {
+			while ((!isFinite(y)) && (x < bx)) {
+				x += xmax / D;
+				y = F(x);
+			};
+			if (x >= bx) {
+				break;
+			};
+			x = PaintLine(x) + xmax / D;
+		};
 };
