@@ -97,14 +97,14 @@ function buildPlane3dLine() {
 	
 	//Разметка оси Z
 	context.beginPath();
-	context.textAlign = 'left';
+	context.textAlign = 'right';
 	context.setLineDash([3]);
 	context.fillStyle = "#000";
 	for (i = 0; i <= N; i++) {
 		z = az + i*zmax/N;
 		helparr = GraphToCanvas(ax, ay, z);
 		context.moveTo(helparr[0], helparr[1]);
-		context.fillText(z.toExponential(), helparr[0]-37, helparr[1]+5)
+		context.fillText(z.toFixed(1), helparr[0]-5, helparr[1]+5)
 		
 		helparr = GraphToCanvas(ax, by, z);
 		context.lineTo(helparr[0], helparr[1]);
@@ -113,11 +113,12 @@ function buildPlane3dLine() {
 		context.lineTo(helparr[0], helparr[1]);
 	};
 	//Разметка осей X и Y
+	context.textAlign = 'left';
 	for (i = 0; i <= N; i++) {
 		x = ax + i*xmax/N;
 		helparr = GraphToCanvas(x, ay, az);
 		context.moveTo(helparr[0], helparr[1]+20);
-		context.fillText(x.toExponential(), helparr[0]-30, helparr[1]+35);
+		context.fillText(x.toFixed(1), helparr[0]-30, helparr[1]+35);
 		
 		helparr = GraphToCanvas(x, by, az);
 		context.lineTo(helparr[0], helparr[1]+20);
@@ -125,7 +126,7 @@ function buildPlane3dLine() {
 		y = ay + i*ymax/N;
 		helparr = GraphToCanvas(bx, y, az);
 		context.moveTo(helparr[0], helparr[1]+20);
-		context.fillText(y.toExponential(), helparr[0]+5, helparr[1]+30);
+		context.fillText(y.toFixed(1), helparr[0]+5, helparr[1]+30);
 		
 		helparr = GraphToCanvas(ax, y, az);
 		context.lineTo(helparr[0], helparr[1]+20);
