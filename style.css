@@ -1,44 +1,40 @@
 body {
     text-align: center;
-	background-color: #DFEFF2;
-	font-family: Arial;
+    background-color: #4E629A;
+    font-family: Arial;
 }
 
 table {
-	text-align: center;
+    text-align: center;
 }
 
-td {
-    width: 50%;
-    vertical-align: middle;
+.name {
+    color: #FFFFFF;
+    font-size: 150%;
 }
 
-.func_params {
-    letter-spacing: -1px;
+.menu {
+    width: 110%;
+    background-color: #E9E9E8;
+	
 }
 
 .number_field {
-    width: 4em;
+	width: 15%;
+}
+
+#step_x {
+	display: none;
+}
+
+#step_y {
+	display: none;
+}
+
+#f {
+	display: none;
 }
 
 #space {
-    margin-left: 0;
+	width: 90%;
 }
-
-#choose_num_vars {
-    margin-top: 5%;
-}
-
-#choose_means {
-    margin-top: 5%;
-    display: none;
-}
-
-#build_graph {
-    display: none;
-}
-
-#build_graph_fx {
-    display: none;
-}
-
