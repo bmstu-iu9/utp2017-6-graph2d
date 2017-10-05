@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css" type="text/css">
-        <title>Графопостроитель</title>
-    </head>
-    <body>
-	
-	<script>
+	<head>
+		<link rel="stylesheet" href="style.css" type="text/css">
+		<title>Графопостроитель</title>
+	</head>
+	<body>
+		<script>
 		var stateOneVar = true;
 		
 		function switchOneVar() {
@@ -51,18 +49,15 @@
 				step_y.disabled = false;
 			}
 		}
-	</script>	
+		</script>
+		
+		<!-- Title -->
+		<h2> Построение графиков функций онлайн без смс и регистрации! </h2>
 	
-        <!-- Меню пострения графика функции -->
-        <table id="graph_1_var">
-            <tr>
-                    <p class="name">
-                        Построение графиков функций онлайн без смс и регистрации!
-                    </p>
-            </tr>
-            <tr>
-                <td>
-                    <div class ="menu">
+		<table id="tab">
+			<tr id="row">
+				<td id="panel">
+					<div id="menu">
 					<br \>
                         <!-- Отступ -->
                         <p>
@@ -84,7 +79,7 @@
                                 <input id="val_ax" type="number" class="number_field" autocomplete="off" value="-20" max="100">
                                 , <input id="val_bx" type="number" class="number_field" autocomplete="off" value="20">
                                 ]
-								<span id="step_x">
+								<span id="step_x" style="display:none;">
 								Шаг
 								<input id="val_hx" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1">
 								</span>
@@ -98,14 +93,14 @@
                                 , 
                                 <input id="val_by" type="number" class="number_field" autocomplete="off" value="20">
                                 ]
-								<span id="step_y">
+								<span id="step_y" style="display:none;">
                             Шаг
                             <input id="val_hy" type="number" class="number_field" autocomplete="off" value="0.1" step="0.1">
                         </span>
                         </p>
 						
 						<!-- Область значений F(x,y) -->
-						<p id="f" class="func_params"> 
+						<p id="f" class="func_params" style="display:none;"> 
                         <b>F &isin; [
                         <input id="val_az" type="number" class="number_field" autocomplete="off" value="0">
                         , 
@@ -133,14 +128,14 @@
                             <br/>
                         </p>
                     </div>
-                </td>
-                <td> 
-                    <!-- Холст отрисовки графика функции -->
-                    <canvas id="space" width="1500" height="800"></canvas> 
-                </td>
-            </tr>
-        </table>
-        <script src="drawGraph1Var.js"></script>
+				</td>	
+				<td id="canvass">
+					<!-- Холст отрисовки графика функции -->
+                    <canvas id="space" width="700px" height="600px"></canvas> 
+				</td>
+			</tr>
+		</table>
+		<script src="drawGraph1Var.js"></script>
         <script src="drawGraph2Var.js"></script>
-    </body>
+	</body>
 </html>

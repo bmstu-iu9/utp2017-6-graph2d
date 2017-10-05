@@ -1,40 +1,41 @@
 body {
-    text-align: center;
-    background-color: #4E629A;
+	text-align: center;
+	background-color: #4E629A;
     font-family: Arial;
 }
 
-table {
-    text-align: center;
-}
-
-.name {
-    color: #FFFFFF;
+h2 {
+	color: #FFFFFF;
     font-size: 150%;
 }
 
-.menu {
-    width: 110%;
-    background-color: #E9E9E8;
-	
+table {
+	padding-top: 50px;
+	text-align: center;
 }
 
 .number_field {
 	width: 15%;
 }
 
-#step_x {
-	display: none;
+#tab {
+	width: 100%;
+	height: 100%;
 }
 
-#step_y {
-	display: none;
+#menu {
+	background-color: #E9E9E8;
+	padding: 10% 5% 10% 5%;
+	margin-left: 10%;
+	display: block;
+	height: 250px;
 }
 
-#f {
-	display: none;
+#panel {
+	width: 30%;
 }
 
-#space {
-	width: 90%;
+#canvass {
+	//background-color: #FFF29A;
+	width: 70%;
 }
